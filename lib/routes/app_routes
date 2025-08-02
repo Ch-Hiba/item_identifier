@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:item_identifier/screens/splash_screen.dart';
+import 'package:item_identifier/screens/onboarding.dart';
+
+class AppRoutes {
+  static const String splash = '/';
+  static const String init = '/init';
+
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case splash:
+        return MaterialPageRoute(
+          builder: (context) => const AISplashScreenWithRedirect(),
+        );
+      case init:
+        return MaterialPageRoute(
+          builder: (context) => const AppInitializer(),
+        );
+      default:
+        return MaterialPageRoute(
+          builder: (context) => const AISplashScreenWithRedirect(),
+        );
+    }
+  }
+}
+
+class AISplashScreenWithRedirect extends StatefulWidget {
+  const AISplashScreenWithRedirect({Key? key}) : super(key: key);
+
+  @override
+  State<AISplashScreenWithRedirect> createState() => _AISplashScreenWithRedirectState();
+}
+
+class _AISplashScreenWithRedirectState extends State<AISplashScreenWithRedirect> {
+  @override
+  void initState() {
+    super.initState();
+    _navigateToInit();
+  }
+
+  void _navigateToInit() {
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, AppRoutes.init);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const AISplashScreen();
+  }
+}
